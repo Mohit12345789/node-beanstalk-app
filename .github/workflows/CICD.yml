@@ -1,4 +1,4 @@
-name: CICD
+name: CI/CD
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 jobs: 
   build-and-deploy:
-    runs-on: [ RHEL-9 ]
+    runs-on: [ rhel-9 ]
     steps: 
       - name: Checkout source
         uses: actions/checkout@v4
