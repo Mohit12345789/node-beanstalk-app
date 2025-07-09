@@ -6,7 +6,7 @@ on:
       - main
 jobs: 
   build-and-deploy:
-    runs-on: [ rhel-9 ]
+    runs-on: ubuntu-latest
     steps: 
       - name: Checkout source
         uses: actions/checkout@v4
