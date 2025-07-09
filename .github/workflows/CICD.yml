@@ -1,0 +1,30 @@
+name: CICD
+
+on:
+  push:
+    branches:
+      - main
+jobs: 
+  build-and-deploy:
+    runs-on: [ RHEL-9 ]
+    steps: 
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: setup node 
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: npm install
+      - name: Generate Deployment Package 
+        run: zip -r node-beanstalk-app-build.zip .
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: MyApplicationName
+          environment_name: MyApplication-Environment
+          version_label: 12345
+          region: us-west-2
+          deployment_package: deploy.zip
